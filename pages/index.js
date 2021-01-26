@@ -1,10 +1,13 @@
-import styled from 'styled-components'
+import React, {useState} from 'react';
+import styled from 'styled-components';
+import {useRouter} from 'next/router';
+
 import db from '../db.json';
-import Widget from '../src/components/Widget'
-import QuizLogo from '../src/components/QuizLogo'
-import QuizBackground from '../src/components/QuizBackground'
-import Footer from '../src/components/Footer'
-import GitHubCorner from '../src/components/GitHubCorner'
+import Widget from '../src/components/Widget';
+import QuizLogo from '../src/components/QuizLogo';
+import QuizBackground from '../src/components/QuizBackground';
+import Footer from '../src/components/Footer';
+import GitHubCorner from '../src/components/GitHubCorner';
 
 
 
@@ -20,6 +23,15 @@ export const QuizContainer = styled.div`
 `;
 
 export default function Home() {
+
+  const [name, setName]=useState('');
+  const router = useRouter();
+
+  function handleSubmit(e){
+    e.preventDefault();
+    router.push(`/quiz/?name=${name}`)
+  };
+
   return (
     <QuizBackground backgroundImage={db.bg}>
       <QuizContainer>
@@ -30,6 +42,13 @@ export default function Home() {
           </Widget.Header>
           <Widget.Content>
             <p>{db.description}</p>
+            <form onSubmit={handleSubmit}>
+              <input
+                 placeholder="Diz ai seu nome para jogar :)" 
+                 onChange={e =>{setName(e.target.value)}}
+              />
+              <button type="submit" disabled={name.length === 0? true :false}>Jogar</button>
+            </form>
           </Widget.Content>
         </Widget>
 
