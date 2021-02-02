@@ -1,6 +1,7 @@
 import React from 'react';
-import Spinner from './Spinner';
+import { Lottie } from '@crello/react-lottie';
 import Widget from './Widget';
+import loadingAnimation from '../screens/Quiz/animations/loading.json';
 
 export default function LoadingWidget() {
     return (
@@ -9,9 +10,14 @@ export default function LoadingWidget() {
           Carregando...
         </Widget.Header>
   
-        <Widget.Content>
-          <Spinner />
-        </Widget.Content>
+        <Widget.Content style={{ display: 'flex', justifyContent: 'center' }}>
+          <Lottie
+            width="200px"
+            height="200px"
+            className="lottie-container basic"
+            config={{ animationData: loadingAnimation, loop: true, autoplay: true }}
+          />
+      </Widget.Content>
       </Widget>
     );
   }

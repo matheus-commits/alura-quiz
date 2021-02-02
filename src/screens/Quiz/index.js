@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import db from '../db.json';
-import QuizLogo from '../src/components/QuizLogo';
-import QuizBackground from '../src/components/QuizBackground';
-import QuizContainer from '../src/components/QuizContainer';
-import QuestionWidget from '../src/components/QuestionWidget';
-import LoadingWidget from '../src/components/LoadingWidget';
-import ResultWidget from '../src/components/ResultWidget';
+import db from '../../../db.json';
+import QuizLogo from '../../components/QuizLogo';
+import QuizBackground from '../../components/QuizBackground';
+import QuizContainer from '../../components/QuizContainer';
+import QuestionWidget from '../../components/QuestionWidget';
+import LoadingWidget from '../../components/LoadingWidget';
+import ResultWidget from '../../components/ResultWidget';
 
 
 const screenStates = {
@@ -14,22 +14,22 @@ const screenStates = {
   RESULT: 'RESULT',
 };
 
-export default function QuizPage() {
+export default function QuizScreen({externalQuestions, externalBg }) {
 
   const [screenState, setScreenState] = useState(screenStates.LOADING);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [results, setResults] = useState([]);
   const totalQuestions = db.questions.length;
   const questionIndex = currentQuestion;
-  const question = db.questions[questionIndex];
+  const question =externalQuestions[questionIndex];
+  const bg = externalBg;
 
    useEffect(() => {
     setTimeout(() => {
       setScreenState(screenStates.QUIZ);
-    }, 1 * 1000);
+    }, 1 * 2500);
   }, []);
 
-  console.log(results)
 
   function handleSubmitQuiz() {
     const nextQuestion = questionIndex + 1;
@@ -48,7 +48,7 @@ export default function QuizPage() {
   }
 
   return (
-    <QuizBackground backgroundImage={db.bg}>
+    <QuizBackground backgroundImage={bg}>
       <QuizContainer>
         <QuizLogo />
         {screenState === screenStates.QUIZ && (
